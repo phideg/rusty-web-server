@@ -28,15 +28,15 @@ Install latest stable version of [Rust](https://www.rust-lang.org/en-US/install.
 ## How to use it
 Copy the rusty-web-server executable into the root folder of the static web content you want to serve and start the server.
 
-USAGE:
-    rusty-web-server.exe [ADDR]
+USAGE:  
+    rusty-web-server.exe [ADDR]  
 
-FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
-
-ARGS:
-    <ADDR>    Sets the IP:PORT combination (default "127.0.0.1:8080")
+FLAGS:  
+    -h, --help       Prints help information  
+    -V, --version    Prints version information  
+  
+ARGS:  
+    <ADDR>    Sets the IP:PORT combination (default "127.0.0.1:8080")  
 
 ## License
 
