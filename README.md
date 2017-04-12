@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/phideg/rusty-web-server.svg?branch=master)](https://travis-ci.org/phideg/rusty-web-server)
-[![Build status](https://ci.appveyor.com/api/projects/status/hvdr3ly46uy68o18?svg=true)](https://ci.appveyor.com/project/phideg/rusty-web-server)
+[![Build status](https://ci.appveyor.com/api/projects/status/id8nhgiplq5nr4k7?svg=true)](https://ci.appveyor.com/project/phideg/rusty-web-server)
+
 
 # rusty-web-server
 A very simple static file web server written in [Rust](www.rust-lang.org) based on [tokio-minihttp](https://github.com/tokio-rs/tokio-minihttp)
