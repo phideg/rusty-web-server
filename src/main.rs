@@ -5,6 +5,7 @@ extern crate futures;
 extern crate num_cpus;
 extern crate clap;
 extern crate mime_guess;
+extern crate url;
 
 use std::str;
 use std::io;
@@ -16,25 +17,23 @@ use tokio_service::Service;
 use tokio_proto::TcpServer;
 use tokio_minihttp::{Request, Response, Http};
 use clap::App;
+use url::Url;
 
 struct RustyWebServer;
 
 impl RustyWebServer {
     fn path_for_request(&self, request_path: &str) -> Option<PathBuf> {
-        // This is equivalent to checking for hyper::RequestUri::AbsoluteUri
-        if !request_path.starts_with("/") {
+        let mut url_string = String::new();
+        url_string.push_str("http://dummy.io");
+        url_string.push_str(request_path);
+        let url = Url::parse(url_string.as_str());
+        if url.is_err() {
             return None;
         }
-        // Trim off the url parameters starting with '?'
-        let end = request_path.find('?').unwrap_or(request_path.len());
-        let request_path = &request_path[0..end];
-        // Append the requested path to the root directory
-        let mut path = PathBuf::from(".");
-        if request_path.starts_with('/') {
-            path.push(&request_path[1..]);
-        } else {
-            return None;
-        }
+        let decoded_path = url.unwrap();
+        let decoded_path = url::percent_encoding::percent_decode(decoded_path.path().as_bytes())
+            .decode_utf8_lossy();
+        let mut path = PathBuf::from(".".to_string() + decoded_path.as_ref());
         // Maybe turn directory requests into index.html requests
         if request_path.ends_with('/') {
             path.push("index.html");
