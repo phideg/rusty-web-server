@@ -23,10 +23,8 @@ struct RustyWebServer;
 
 impl RustyWebServer {
     fn path_for_request(&self, request_path: &str) -> Option<PathBuf> {
-        let mut url_string = String::new();
-        url_string.push_str("http://dummy.io");
-        url_string.push_str(request_path);
-        let url = Url::parse(url_string.as_str());
+        let url = "http://dummy.io".to_string() + request_path;
+        let url = Url::parse(url.as_str());
         if url.is_err() {
             return None;
         }
