@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/phideg/rusty-web-server.svg?branch=master)](https://travis-ci.org/phideg/rusty-web-server)
-[![Build status](https://ci.appveyor.com/api/projects/status/id8nhgiplq5nr4k7?svg=true)](https://ci.appveyor.com/project/phideg/rusty-web-server)
+[![Rust-Build Actions Status](https://github.com/phideg/rusty-web-server/workflows/Rust/badge.svg)](https://github.com/phideg/rusty-web-server/actions)
 
 
 # rusty-web-server
