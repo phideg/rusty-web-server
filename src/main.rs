@@ -29,9 +29,8 @@ impl RustyWebServer {
             return None;
         }
         let decoded_path = url.unwrap();
-        let decoded_path = url::percent_encoding::percent_decode(decoded_path.path().as_bytes())
-            .decode_utf8_lossy();
-        let mut path = PathBuf::from(".".to_string() + decoded_path.as_ref());
+        let decoded_path = decoded_path.path();
+        let mut path = PathBuf::from(".".to_string() + decoded_path);
         // Maybe turn directory requests into index.html requests
         if request_path.ends_with('/') {
             path.push("index.html");
@@ -56,7 +55,7 @@ impl Service for RustyWebServer {
             return future::ok(resp);
         };
 
-        let content_type = format!("{}", mime_guess::guess_mime_type(path.clone()));
+        let content_type = format!("{}", mime_guess::from_path(&path).first_or_octet_stream());
 
         match File::open(path) {
             Ok(mut file) => {
@@ -102,4 +101,15 @@ fn main() {
     let mut srv = TcpServer::new(Http, addr);
     srv.threads(num_cpus::get());
     srv.serve(|| Ok(RustyWebServer))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_path_resolution() {
+        let server = RustyWebServer{};        
+        assert_eq!(server.path_for_request("/"), Some(PathBuf::from("./index.html")));
+    }    
 }
